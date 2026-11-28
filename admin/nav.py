@@ -1,4 +1,19 @@
 import tkinter as tk
+from tkinter import ttk
+import customtkinter as ctk
+
+
+# App Palletes
+PALETTE = {
+    "bg_app": ("#eaf3f6", "#0f172a"),
+    "sidebar": ("#dceef3", "#13222b"),
+    "card": ("#ffffff", "#1e293b"),
+    "border": ("#d5e2e7", "#334155"),
+    "text_dark": ("#1e293b", "#f1f5f9"),
+    "text_muted": ("#64748b", "#94a3b8"),
+    "teal_dark": ("#0b6e78", "#0e7490"),
+    "teal_hover": ("#095860", "#155e75"),
+}
 
 class Navigation:
 
@@ -11,7 +26,7 @@ class Navigation:
 
         self.sidebar_frame = tk.Frame(
             parent,
-            bg="#95CCDD",
+            bg=PALETTE["sidebar"][0],
             width=270
         )
         self.sidebar_frame.pack_propagate(False)
@@ -38,9 +53,9 @@ class Navigation:
                 self.sidebar_frame,
                 text=text,
                 bd = 0,
-                bg="#95CCDD",
-                fg="#373D3F",
-                font=("Verdana", 10, "bold"),
+                bg= PALETTE["sidebar"][0],
+                fg=PALETTE["text_dark"][0],
+                font=("Segoe UI", 10, "bold"),
                 relief="flat",
                 activebackground= "#95CCDD",
                 activeforeground="#373D3F",
@@ -112,7 +127,7 @@ class Navigation:
     @staticmethod
 
     def navbar(parent, title_text, name):
-        header = tk.Frame(parent, bg="#0097B2", height=70)
+        header = tk.Frame(parent, bg=PALETTE["bg_app"][0], height=70)
         header.pack(fill="x")
 
         tk.Label(

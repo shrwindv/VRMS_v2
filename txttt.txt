@@ -3,3 +3,5 @@ py -m pip install customtkinter
 ! if no pip module
 py -m ensurepip --upgrade
 py -m pip install customtkinter
+
+python.exe -m pip install --upgrade pip

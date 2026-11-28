@@ -22,7 +22,7 @@ class Authentication(ctk.CTk):
         super().__init__()
         self._id = None
         self.auth = Auth_Page()
-        self.error = False
+        self.error = None
         self.window = None
         ctk.set_appearance_mode("light")
 
@@ -65,13 +65,14 @@ class Authentication(ctk.CTk):
             bg = "#eaf3f6"
         ).pack(pady = (40, 25 if self.error == False else 0))
 
-        Label(window,
+        self.error = Label(window,
             text="Incorrect username or password",
             font=("Segoe UI", 10, ""),
             justify="center",
-            fg="#FF0000",
+            fg="#eaf3f6",
             bg="#eaf3f6"
-        ).pack(pady=(5, 20)) if self.error == True else Label()
+        )
+        self.error.pack(pady=(5, 20))
 
         Label(window,
             text="Username:",
@@ -142,6 +143,7 @@ class Authentication(ctk.CTk):
             app = MainContent(self._id)
             app.run()
         else:
+            self.error.configure(fg="#FF0000")
             self.login_btn.configure(state="normal", text="Sign in")
             self.user_entry.delete(0, "end")
             self.pass_entry.delete(0, "end")

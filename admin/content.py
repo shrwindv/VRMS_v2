@@ -15,7 +15,7 @@ class MainContent:
         self.navbar_frame = tk.Frame(
             self.window,
             bg="#0097B2",
-            height=70
+            height=64
         )
         self.navbar_frame.pack(fill="x")
         self.navbar_frame.pack_propagate(False)
@@ -55,7 +55,7 @@ class MainContent:
 
         # --------------------------------------------------------------------------------------------------------
         # change me back to dashboard
-        self.navigation.show_page("vehicles")
+        self.navigation.show_page("dashboard")
 
     # Update navbar title
     def update_title(self, page_name):
