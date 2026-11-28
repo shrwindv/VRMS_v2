@@ -27,7 +27,7 @@ class Vehicles:
 
         left = tk.LabelFrame(
             page_frame,
-            text = "  Vehicle Details  ",
+            text = "Vehicle Detail",
             fg = "#373D3F",
             bg = "#FFFFFF",
             height = 1000,
