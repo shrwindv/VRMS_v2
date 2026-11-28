@@ -1,149 +1,153 @@
 from tkinter import *
+from tkinter import ttk
+import customtkinter as ctk
 from tkinter import messagebox as mbox
 from pages.authentication import Auth_Page
 
-class Authentication():
+# App Palletes
+PALETTE = {
+    "bg_app": ("#eaf3f6", "#0f172a"),
+    "sidebar": ("#dceef3", "#13222b"),
+    "card": ("#ffffff", "#1e293b"),
+    "border": ("#d5e2e7", "#334155"),
+    "text_dark": ("#1e293b", "#f1f5f9"),
+    "text_muted": ("#64748b", "#94a3b8"),
+    "teal_dark": ("#0b6e78", "#0e7490"),
+    "teal_hover": ("#095860", "#155e75"),
+}
+
+
+class Authentication(ctk.CTk):
     def __init__ (self):
+        super().__init__()
         self._id = None
-        self._name = None
-        self._role = None
-        self._window = None
+        self.auth = Auth_Page()
+        self.error = False
+        self.window = None
+        ctk.set_appearance_mode("light")
 
     @staticmethod
     def change_color(e, color):
         e.widget.config(background=color)
 
-    def login(self):
-        window = Tk()
-        auth = Auth_Page()
+    def login(self) -> str:
+        window = ctk.CTk()
+        style = ttk.Style()
         window.title("Login")
         window.geometry("700x400")
-        window.configure(bg="#FFFFFF")
+        window.configure(fg_color=PALETTE["bg_app"])
         window.resizable(False, False)
 
+        self.window = window
 
-        self._window = window
-
-
-        icon = PhotoImage(file="img/icon/vrs.png")
-        window.iconphoto(True, icon)
-
-        header = Frame(window, bg = "#0097B2", height = 50)
-        header.pack(fill = "x")
-
-        header_label = Label(header, text = "Vehicle Rental Management System", font = ("Arial", 20, "bold"), justify = "center", bg = "#0097B2", fg = "#FFFFFF")
-        header_label.pack(pady = 10)
-
-        label = Label(window, text = "Please log in to continue", font = ("Comic sans MS", 15, ""), justify = "center", fg = "#737373", bg = "#FFFFFF")
-        label.pack(pady = (25, 15))
-
-
-# ___________________________________________________________________________________________
-
-
-        username = Label(window, text = "Username:", fg = "black", font = ("Berlin Sans FB Demi", 10, "bold"), bg = "#FFFFFF")
-        username.pack(anchor = "w", padx = (100, 0))
-
-        user_input = Frame(window, height = 35, width = 500, highlightbackground = "black", highlightthickness = 1, bg = "#FFFFFF")
-        user_input.pack()
-        user_input.pack_propagate(False)
-
-        user_entry = Entry(user_input, bg="#FFFFFF", fg="black", bd=0, relief="flat", font=("Arial", 11))
-        user_entry.pack(fill="both", expand=True, padx=8, pady=5)
-
-
-# ___________________________________________________________________________________________
-
-
-        pass_label = Label(window, text = "Password:", fg = "black", font = ("Berlin Sans FB Demi", 10, "bold"), bg = "#FFFFFF")
-        pass_label.pack(anchor = "w", padx = (100, 0), pady = (10, 0))
-
-        pass_input = Frame(window, height = 35, width = 500, highlightbackground = "black", highlightthickness = 1, bg = "#FFFFFF")
-        pass_input.pack()
-        pass_input.pack_propagate(False)
-
-        pass_entry = Entry(pass_input, bg = "#FFFFFF", fg = "black", bd = 0, relief = "flat", font = ("Arial", 11), show = "*")
-        pass_entry.pack(fill = "both", expand = True, padx = 8, pady = 5)
+        header = ctk.CTkFrame(
+            window,
+            fg_color=PALETTE["teal_dark"],
+            corner_radius=0,
+            height=50,
+        )
+        header.pack(side="top", fill="x")
+        header.pack_propagate(False)
         
-        def handle_login():
-            username_val = user_entry.get().strip()
-            password_val = pass_entry.get().strip()
+        ctk.CTkLabel(
+            header,
+            text="Vehicle Rental Management System",
+            font=("Segoe UI", 20, "bold"),
+            text_color="#ffffff",
+            justify = "center"
+        ).pack(padx=24, pady=12)
+        
+        Label(window,
+            text = "Please log in to continue",
+            font = ("Comic sans MS", 15, ""),
+            justify = "center",
+            fg = "#737373",
+            bg = "#eaf3f6"
+        ).pack(pady = (40, 25 if self.error == False else 0))
 
-            # 1. Required Field Validation
-            if not username_val and not password_val:
-                mbox.showerror("Error", "Username and Password are required!")
-                user_entry.focus()
-                return
-            if not username_val:
-                mbox.showerror("Error", "Username is required!")
-                user_entry.focus()
-                return
-            if not password_val:
-                mbox.showerror("Error", "Password is required!")
-                pass_entry.focus()
-                return
+        Label(window,
+            text="Incorrect username or password",
+            font=("Segoe UI", 10, ""),
+            justify="center",
+            fg="#FF0000",
+            bg="#eaf3f6"
+        ).pack(pady=(5, 20)) if self.error == True else Label()
 
-            # 2. Database Verification Check
-            success, name, role, msg = auth.verify_login(username_val, password_val)
-            self._role = role
-            self._name = name
+        Label(window,
+            text="Username:",
+            fg="black",
+            font=("Segoe UI", 11, "bold"),
+            bg="#eaf3f6"
+        ).pack(anchor="w", padx=(100, 0))
 
-            if success:
-                mbox.showinfo("Success", msg)
-                window.destroy()  # Close the login window
+        self.user_entry = ctk.CTkEntry(window, width=530)
+        self.user_entry.pack(padx=24, pady=(5, 8))
 
-            else:
-                mbox.showerror("Login Failed", msg)
-                pass_entry.delete(0, END)  # Clear password field on failure
 
-# ___________________________________________________________________________________________
+        Label(window,
+            text="Password:",
+            fg="black",
+            font=("Segoe UI", 11, "bold"),
+            bg="#eaf3f6"
+        ).pack(anchor="w", padx=(100, 0))
 
-        button_frame = Frame(window, height = 35, width = 50, bg = "#FFFFFF")
-        button_frame.pack(pady = (50, 0))
-        button_frame.pack_propagate()
+        self.pass_entry = ctk.CTkEntry(window, width=530, show="•")
+        self.pass_entry.pack(padx=24, pady=(5, 8))
 
-        login = Button(
-            button_frame,
-            text = "Login",
-            bg = "#0097B2",
-            fg = "#FFFFFF",
-            padx = 25,
-            font = ("Verdana", 10, "bold"),
-            activebackground="#007A90",
-            activeforeground="white",
-            relief = "flat",
-            command = handle_login
+        btn_row = Frame(window)
+        btn_row.pack(fill="x", padx=24, pady=24)
+        self.login_btn = ctk.CTkButton(
+            window,
+            text="Sign in",
+            font=("Segoe UI", 11, "bold"),
+            fg_color=PALETTE["teal_dark"],
+            hover_color=PALETTE["teal_hover"],
+            text_color="#ffffff",
+            corner_radius=5,
+            height=27,
+            width=100,
+            command=self.sign_in,
         )
-        login.pack(side = "left", padx = 10)
-
-        cancel = Button(
-            button_frame,
-            text = "Cancel",
-            bg = "gray",
-            fg = "#FFFFFF",
-            activebackground="gray",
-            activeforeground="white",
-            padx = 20,
-            font = ("Verdana", 10, "bold"),
-            relief = "flat",
-            command = window.destroy
-        )
-        cancel.pack(side = "right", padx = 10)
-
-        login.bind("<Enter>", lambda e: Authentication.change_color(e, "#007A90"))  # Hover color
-        login.bind("<Leave>", lambda e: Authentication.change_color(e, "#0097B2"))  # Normal color
-
-        cancel.bind("<Enter>", lambda e: Authentication.change_color(e, "#555555"))  # Darker gray hover
-        cancel.bind("<Leave>", lambda e: Authentication.change_color(e, "gray"))
+        self.login_btn.pack()
 
 
         window.mainloop()
 
+    def sign_in(self):
+        username_val = self.user_entry.get().strip()
+        password_val = self.pass_entry.get().strip()
+
+        # 1. Required Field Validation
+        if not username_val and not password_val:
+            mbox.showerror("Error", "Username and Password are required!")
+            self.user_entry.focus()
+            return
+        if not username_val:
+            mbox.showerror("Error", "Username is required!")
+            self.user_entry.focus()
+            return
+        if not password_val:
+            mbox.showerror("Error", "Password is required!")
+            self.pass_entry.focus()
+            return
+
+        # self.login_btn.configure(state="disabled", text="Signing in...")
+        #check user in database
+        id = self.auth.verify_login(username_val, password_val)
+        self._id = id
+
+        if id != 0:
+            self.window.destroy()
+            from admin.content import MainContent
+            app = MainContent(self._id)
+            app.run()
+        else:
+            self.login_btn.configure(state="normal", text="Sign in")
+            self.user_entry.delete(0, "end")
+            self.pass_entry.delete(0, "end")
+            self.pass_entry.focus_set()
+
+
 if __name__ == "__main__":
     auth = Authentication()
     auth.login()
-
-    if auth._name:
-        from admin.content import MainContent
-        app = MainContent(auth._name)
-        app.run()

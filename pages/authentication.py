@@ -10,7 +10,6 @@ class Auth_Page(Database):
             user = self.cursor.fetchone()
             
             if user:
-                # user[0] = user_id, user[1] = user_fname, user[2] = role
-                return True, user[1], user[2], f"Welcome back, {user[2]}!"
+                return user[0]
             else:
-                return False, None, "Invalid username or password."
+                return 0
