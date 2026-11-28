@@ -5,7 +5,11 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="~\PycharmProjects\VRMS_v2\.venv" jdkType="Python SDK" />
+=======
+    <orderEntry type="jdk" jdkName="~\AppData\Local\Programs\Python\Python314\python.exe" jdkType="Python SDK" />
+>>>>>>> 25c720745b3b5c9304847ecd2325d95ebb78dcfe
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
