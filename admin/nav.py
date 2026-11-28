@@ -58,7 +58,7 @@ class Navigation:
                 text=text,
                 bd = 0,
                 bg="#95CCDD",
-                fg="#676D6F",
+                fg="#373D3F",
                 font=("Verdana", 10, "bold"),
                 relief="flat",
                 activebackground= "#95CCDD",

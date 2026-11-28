@@ -7,7 +7,8 @@ class MainContent:
     def __init__(self, username):
         self.window = tk.Tk()
         self.window.title("Vehicle Rental Management System")
-        self.window.geometry("1300x700")
+        self.window.after(10, lambda: self.window.state("zoomed"))
+        self.window.resizable(False, False)
         self.window.configure(bg="white")
 
         # Navbar
@@ -51,7 +52,10 @@ class MainContent:
             self.update_title
         )
 
-        self.navigation.show_page("dashboard")
+
+        # --------------------------------------------------------------------------------------------------------
+        # change me back to dashboard
+        self.navigation.show_page("vehicles")
 
     # Update navbar title
     def update_title(self, page_name):

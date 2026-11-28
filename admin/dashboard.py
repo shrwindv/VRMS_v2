@@ -8,6 +8,7 @@ class Dashboard:
         self.parent = parent
         self.create_widgets()
 
+
     def create_widgets(self):
         style = ttk.Style()
         qry = Query()
